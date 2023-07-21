@@ -1,17 +1,21 @@
-import Manu from "./component/manu"
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import HomePage from "./page/HomePage";
+import ByCategoryPage from "./page/ByCategoryPage";
+//import DetailsPage from "./page/DetailsPage";
 
 
 function App() {
-  
-
   return (
-    <>
-    <Manu />
-     <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
-    </>
-  )
+    <div>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/byCategory/:id" element={<ByCategoryPage />} />
+          {/* {// <Route path="/details/:id" element={<DetailsPage />} />} */}
+        </Routes>
+      </BrowserRouter>
+    </div>
+  );
 }
 
-export default App
+export default App;

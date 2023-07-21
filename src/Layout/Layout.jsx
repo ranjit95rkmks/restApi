@@ -1,21 +1,28 @@
-import { useEffect } from "react";
+/* eslint-disable react/prop-types */
+/* eslint-disable no-undef */
+/* eslint-disable react/jsx-key */
+import { useEffect, useState } from "react";
 import { catgoriesName } from "../api/api";
+import { NavLink } from "react-router-dom";
 
-function Manu() {
+function Layout (props) {
 
-    let categories = []
+    const [categories, setCategories] = useState([]);
 
     useEffect(()=>{
         (async () => {
-            categories = catgoriesName();
+            const  res = await catgoriesName();
+            
+            setCategories(res);
+            console.log(`sala ${categories}`)
 
-        } )()
+        })()
     }
     ,[])
   return (
     <div>
 
-            <div>
+             <div>
                 <div className="navbar fixed z-50 top-0 shadow bg-base-100">
                     <div className="navbar-start">
                         <div className="dropdown">
@@ -23,10 +30,10 @@ function Manu() {
                                 <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 6h16M4 12h8m-8 6h16" /></svg>
                             </label>
                             <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-                                <li><NavLink  to={'/'}>হোম</NavLink>  </li>
+                                <li><NavLink key='10' to={'/'}>হোম</NavLink>  </li>
                                 {
                                     categories.map((item,i)=>{
-                                        return     <li><NavLink key={i.toString()} to={'/byCategory/'+item['id']}>{item['name']}</NavLink>  </li>
+                                        return  <li ><NavLink key={i.toString()} to={'/byCategory/'+item['id']}>{item['name']}</NavLink> </li>
                                     })
                                 }
                             </ul>
@@ -39,6 +46,7 @@ function Manu() {
                             <li><NavLink  to={'/'}>হোম</NavLink>  </li>
                             {
                                 categories.map((item,i)=>{
+                                    console.log(item['name']);
                                     return <li><NavLink key={i.toString()} to={'/byCategory/'+item['id']}>{item['name']}</NavLink>  </li>
                                 })
                             }
@@ -46,7 +54,9 @@ function Manu() {
                     </div>
 
                 </div>
-            </div>
+            </div> 
+
+           
 
             {props.children}
 
@@ -54,4 +64,5 @@ function Manu() {
   );
 }
 
-export default Manu;
+export default Layout;
+
